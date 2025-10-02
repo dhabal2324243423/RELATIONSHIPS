@@ -13,7 +13,6 @@ const userSchema = new Schema({
   username: String,
   addresses : [
     {   _id : false, // to remove location's individual id 
-        
         location : String,
         city : String
   }
@@ -33,7 +32,7 @@ const addUsers = async () => {
     
     user1.addresses.push({location : "p32 wallStreet", city : "London"});   
    let result = await user1.save();
-    console.log(result)
+    console.log(result);
 };
 
-addUsers();
+addUsers(); 
