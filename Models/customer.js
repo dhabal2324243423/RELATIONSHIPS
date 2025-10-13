@@ -32,26 +32,15 @@ const customerSchema = new Schema({
 const Order = mongoose.model("Order", orderSchema); // order schema
 const Customer = mongoose.model("Customer", customerSchema); // customer schema.
 
-const addCustomer = async () => {
-  // let cust1 = new Customer({
-  //   name: "Rahul Kumar",
-  // });
-
-  // let order1 = await Order.findOne({ iteam: "chips" });
-  // let order2 = await Order.findOne({ iteam: "chocolates" });
-
-  // cust1.orders.push(order1); // iteam se pura object he dhund kr push kr rhe hai re cust1 meh
-  // cust1.orders.push(order2);
-
-  // let result = await cust1.save();
-  // console.log(result); // terminal ke andr pura object
-  // // store hote dikhega but mongodb ke andr sirf id store hoga because humne schema aisa define kiya hai
-
-  let result = await Customer.find();
-  console.log(result);
+const findCustomer = async () => {
+  let result = await Customer.find().populate("orders"); // populate is used to fetch the details of the referenced document (order in this case)
+  // hamne customer ke andr orders ko access kiyta hai usme order id likha  and then refrence . populate use karte waqt hamne
+  // usme order likha jiska refrence diya hai customer schema me .
+  // populate ne wha se order id ko access kiya and then order ke andr jo bhi details hai wo leke aaya .(print kardiya )
+  console.log(result[0]);
 };
 
-addCustomer();
+findCustomer();
 
 // const addOrders = async () => {
 //   let res = await Order.insertMany([
