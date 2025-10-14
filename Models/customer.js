@@ -29,9 +29,12 @@ const customerSchema = new Schema({
   ],
 });
 
-customerSchema.post("findOneAndDelete", async (data) => {
-  // kuch data ata hai isme
-  console.log(data);
+customerSchema.post("findOneAndDelete", async (customer) => {
+  if (customer.orders.length > 0) {
+    let result = await Order.deleteMany({ _id: { $in: customer.orders } });
+    // Orders se schema access kita and using $in operator.
+    console.log(result);
+  }
 });
 
 const Order = mongoose.model("Order", orderSchema); // order schema
@@ -75,7 +78,7 @@ const addCustomer = async () => {
 
 const deleteCustomer = async () => {
   // to delete the customer..
-  let data = await Customer.findByIdAndDelete("68e0b93c670e9a39cefa9f18");
+  let data = await Customer.findByIdAndDelete("68ee8551c1633dc098c226cb");
   console.log(data); // delete data post ke pass gya (post middleware iske baad run hota) .
 };
 
