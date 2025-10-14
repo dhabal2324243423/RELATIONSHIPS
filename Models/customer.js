@@ -29,12 +29,9 @@ const customerSchema = new Schema({
   ],
 });
 
-customerSchema.pre("findOneAndDelete", async () => {
-  console.log("pre middlware");
-});
-
-customerSchema.post("findOneAndDelete", async () => {
-  console.log("post middlware");
+customerSchema.post("findOneAndDelete", async (data) => {
+  // kuch data ata hai isme
+  console.log(data);
 });
 
 const Order = mongoose.model("Order", orderSchema); // order schema
@@ -78,8 +75,8 @@ const addCustomer = async () => {
 
 const deleteCustomer = async () => {
   // to delete the customer..
-  let data = await Customer.findByIdAndDelete("68ed434128c6a0c933bc2c59");
-  console.log(data);
+  let data = await Customer.findByIdAndDelete("68e0b93c670e9a39cefa9f18");
+  console.log(data); // delete data post ke pass gya (post middleware iske baad run hota) .
 };
 
 deleteCustomer();
