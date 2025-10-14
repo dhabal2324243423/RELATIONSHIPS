@@ -29,8 +29,12 @@ const customerSchema = new Schema({
   ],
 });
 
-Schema.pre("findOnedAndDelete", async () => {
+customerSchema.pre("findOneAndDelete", async () => {
   console.log("pre middlware");
+});
+
+customerSchema.post("findOneAndDelete", async () => {
+  console.log("post middlware");
 });
 
 const Order = mongoose.model("Order", orderSchema); // order schema
@@ -62,7 +66,7 @@ const addCustomer = async () => {
     name: "karan Arjun",
   });
   let newOrder = new Order({
-    iteam: "Pizza",
+    iteam: "Burger",
     price: 250,
   });
   newCust.orders.push(newOrder); // pushing order id in the orders array of customer schema
@@ -73,6 +77,7 @@ const addCustomer = async () => {
 };
 
 const deleteCustomer = async () => {
+  // to delete the customer..
   let data = await Customer.findByIdAndDelete("68ed434128c6a0c933bc2c59");
   console.log(data);
 };
