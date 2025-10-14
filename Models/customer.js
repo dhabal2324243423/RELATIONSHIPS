@@ -29,6 +29,10 @@ const customerSchema = new Schema({
   ],
 });
 
+Schema.pre("findOnedAndDelete", async () => {
+  console.log("pre middlware");
+});
+
 const Order = mongoose.model("Order", orderSchema); // order schema
 const Customer = mongoose.model("Customer", customerSchema); // customer schema.
 
@@ -37,7 +41,7 @@ const findCustomer = async () => {
   // hamne customer ke andr orders ko access kiyta hai usme order id likha  and then refrence . populate use karte waqt hamne
   // usme order likha jiska refrence diya hai customer schema me .
   // populate ne wha se order id ko access kiya and then order ke andr jo bhi details hai wo leke aaya .(print kardiya )
-  console.log(result[0]);
+  // console.log(result[0]);
 };
 
 findCustomer();
@@ -52,3 +56,25 @@ findCustomer();
 // };
 
 // addOrders();
+
+const addCustomer = async () => {
+  let newCust = new Customer({
+    name: "karan Arjun",
+  });
+  let newOrder = new Order({
+    iteam: "Pizza",
+    price: 250,
+  });
+  newCust.orders.push(newOrder); // pushing order id in the orders array of customer schema
+  await newOrder.save();
+  await newCust.save();
+
+  console.log("added new customer");
+};
+
+const deleteCustomer = async () => {
+  let data = await Customer.findByIdAndDelete("68ed434128c6a0c933bc2c59");
+  console.log(data);
+};
+
+deleteCustomer();
